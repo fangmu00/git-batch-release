@@ -1,0 +1,11 @@
+// 项目配置文件
+{
+    "react-demo": { // 项目名称
+        "proPath": "../react-demo", // 项目相对路径
+        "version": "daily/1.0.0" // 分支版本号
+    },
+    "demo1": {
+        "proPath": "../demo1",
+        "version": "daily/1.11.0" 
+    }
+}
