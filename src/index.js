@@ -2,9 +2,11 @@
 
 const program = require('commander');
 const chalk = require('chalk');
+const inquirer = require('inquirer');
 const child_process = require('child_process'); // js执行命令行
 const fs = require('fs');
 const path = require('path');
+const { fileSelectQuestion, questions } = require('./questions');
 
 const { resolve } = path;
 let file = null;
@@ -87,6 +89,20 @@ const publish = () =>{
         console.log((`\n${chalk.green('End')}`));
     });
 }
+
+const init = () =>{
+    program
+    .command('start')
+    .alias('s')
+    .description('开始')
+    .action(option => {
+        inquirer.prompt(fileSelectQuestion()).then((content) => {
+            console.log(content);
+        })
+    });
+}
+
+init();
 push();
 publish();
 program.parse(process.argv);
