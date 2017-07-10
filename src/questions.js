@@ -1,4 +1,4 @@
-const getFiles = require('./getFiles');
+const chalk = require('chalk');
 
 const questions = () => ([
     {
@@ -14,16 +14,38 @@ const questions = () => ([
     }
 ])
 
-const fileSelectQuestion = () => {
-    const question = {   
+const fileSelectQuestion = (files) => (
+    {
         type: 'checkbox',
-        name: 'proName',
+        name: 'name',
         message: '请选择要操作的项目',
-        choices: getFiles()
+        choices: files,
+        validate: (content) => {
+            if (content.length === 0) {
+                return '至少选择一个项目!';
+            }
+            return true;
+        }
     }
-    return question;
-}
+)
+
+const comfirmQuestion = (proList) => (
+    {
+        type: 'confirm',
+        name: 'isOk',
+        message: `当前选中的项目有：\n${chalk.cyan(proList)}\n请确认操作项目：`,
+        validate: (content) => {
+            if (!content) {
+                process.exit(0);
+                return false;
+            }
+            return true;
+        }
+    }
+)
+
 module.exports = {
     fileSelectQuestion,
-    questions
+    questions,
+    comfirmQuestion
 }

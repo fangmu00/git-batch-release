@@ -1,15 +1,19 @@
 const chalk = require('chalk');
-const commands = (content) => {
-    const commands = [
-        {
-            command: 'git status',
-            errCheck: function(data) {
-                if (data.indexOf('working tree clean') === -1) {
+
+const checkCleanCommand = (content) => (
+    {
+        command: 'git status',
+        errFn: function(data) {
+            if (data.indexOf('working tree clean') === -1 && data.indexOf('working directory clean') === -1) {
                 console.log(chalk.red(`\nError: 你必须清空 ${content.name} 项目下的git工作区\n`));
                 process.exit(0);
-                }
             }
-        },
+        }
+    }
+)
+
+const commands = (content) => {
+    const commands = [
         {
             command: 'git fetch origin'
         },
@@ -33,4 +37,7 @@ const commands = (content) => {
     return commands;
 }
 
-module.exports = commands
+module.exports = {
+    checkCleanCommand,
+    commands
+}
