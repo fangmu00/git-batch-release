@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-// todo 1.获取当前项目分支 2.确认对话验证处理
+// todo 1.确认对话验证处理
 const program = require('commander');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
@@ -7,7 +7,7 @@ const child_process = require('child_process'); // js执行命令行
 const fs = require('fs');
 const path = require('path');
 const { fileSelectQuestion, questions, comfirmQuestion } = require('./questions');
-const getFiles = require('./getFiles');
+const { getFiles } = require('./file');
 const { checkCleanCommand, commands } = require('./commands');
 const log = require('./log');
 const proList = []; //用于存项目列表
@@ -39,7 +39,7 @@ const solveQuestions = (name, index) => {
         return false;
     }
     log.bar(name[index]);
-    inquirer.prompt(questions()).then((content) => {
+    inquirer.prompt(questions(name[index])).then((content) => {
         proList.push({
             name:name[index],
             type: content.type,

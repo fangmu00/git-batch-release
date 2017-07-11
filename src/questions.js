@@ -1,6 +1,7 @@
 const chalk = require('chalk');
+const { getCurrentVersion } = require('./file')
 
-const questions = () => ([
+const questions = (name) => ([
     {
         type: 'list',
         name: 'type',
@@ -10,7 +11,8 @@ const questions = () => ([
     {
         type: 'input',
         name: 'version',
-        message: '请输入分支号'
+        message: '请输入分支号',
+        default: getCurrentVersion(name)
     }
 ])
 
